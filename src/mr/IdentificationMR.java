@@ -63,8 +63,8 @@ public class IdentificationMR {
         private JSONObject paramJObj;
         private final Fingerprint fpQuery;
         private final Fingerprint fpData;
-        private Person queryPerson;
-        private Person dataPerson;
+        private final Person queryPerson;
+        private final Person dataPerson;
         /* Top Ten */
         private final HashMap<String,Float> map;
         private final ValueComparator bvc;
@@ -89,7 +89,7 @@ public class IdentificationMR {
         protected void setup(Context context) throws IOException, InterruptedException {
             try {
                 super.setup(context);
-                FileSystem hdfs = FileSystem.get( new URI( "hdfs://localhost:9000" ), new Configuration());     
+                FileSystem hdfs = FileSystem.get( new URI( "hdfs://master:9000" ), new Configuration());     
                 SetupParamObj(hdfs);
                 SetupQueryPerson(hdfs);
             } catch (IOException | InterruptedException | URISyntaxException ex) {
@@ -130,7 +130,7 @@ public class IdentificationMR {
         
         
         public void SetupParamObj(FileSystem hdfs) throws URISyntaxException, IOException{
-            BufferedReader bfr=new BufferedReader(new InputStreamReader(hdfs.open(new Path("hdfs://localhost:9000/parameter.json"))));
+            BufferedReader bfr=new BufferedReader(new InputStreamReader(hdfs.open(new Path("hdfs://master:9000/parameter.json"))));
             String str = bfr.readLine();
             if(str != null){
                 paramJObj = (JSONObject) JSONValue.parse(str);
@@ -192,7 +192,7 @@ public class IdentificationMR {
         protected void setup(Context context) throws IOException, InterruptedException {
             try {
                 super.setup(context);
-                FileSystem hdfs = FileSystem.get( new URI( "hdfs://localhost:9000" ), new Configuration());     
+                FileSystem hdfs = FileSystem.get( new URI( "hdfs://master:9000" ), new Configuration());     
                 SetupParamObj(hdfs);
             } catch (IOException | InterruptedException | URISyntaxException ex) {
                 Logger.getLogger(IdentificationMR.class.getName()).log(Level.SEVERE, null, ex);
@@ -222,7 +222,7 @@ public class IdentificationMR {
         }
         
         public void SetupParamObj(FileSystem hdfs) throws URISyntaxException, IOException{
-            BufferedReader bfr=new BufferedReader(new InputStreamReader(hdfs.open(new Path("hdfs://localhost:9000/parameter.json"))));
+            BufferedReader bfr=new BufferedReader(new InputStreamReader(hdfs.open(new Path("hdfs://master:9000/parameter.json"))));
             String str = bfr.readLine();
             if(str != null){
                 paramJObj = (JSONObject) JSONValue.parse(str);
@@ -237,14 +237,14 @@ public class IdentificationMR {
             JSONObject paramJObj = new JSONObject();
             paramJObj.put("K", 20000);
             paramJObj.put("Threshold", 0);
-            paramJObj.put("PathInput", "hdfs://localhost:9000/db/zip-Summary/*.zip");
-            paramJObj.put("PathOutput", "hdfs://localhost:9000/result");
-            paramJObj.put("Query", "hdfs://localhost:9000/query/FVC2000-Db1_a_1_1.template");
+            paramJObj.put("PathInput", "hdfs://master:9000/db/zip-Summary/*.zip");
+            paramJObj.put("PathOutput", "hdfs://master:9000/result");
+            paramJObj.put("Query", "hdfs://master:9000/query/FVC2000-Db1_a_1_1.template");
             
             Configuration conf = new Configuration();
             
-            FileSystem hdfs = FileSystem.get( new URI( "hdfs://localhost:9000" ), conf );
-            Path file = new Path("hdfs://localhost:9000/parameter.json");
+            FileSystem hdfs = FileSystem.get( new URI( "hdfs://master:9000" ), conf );
+            Path file = new Path("hdfs://master:9000/parameter.json");
             if ( hdfs.exists( file )) 
             { 
                 if(hdfs.delete( file, true )) System.out.println("DELETE JSON");
