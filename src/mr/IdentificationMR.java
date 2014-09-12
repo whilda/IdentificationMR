@@ -237,9 +237,9 @@ public class IdentificationMR {
             JSONObject paramJObj = new JSONObject();
             paramJObj.put("K", 20000);
             paramJObj.put("Threshold", 0);
-            paramJObj.put("PathInput", "hdfs://master:9000/db/zip-Summary/*.zip");
+            paramJObj.put("PathInput", "hdfs://master:9000/db/zip-Db1_b/*.zip");
             paramJObj.put("PathOutput", "hdfs://master:9000/result");
-            paramJObj.put("Query", "hdfs://master:9000/query/FVC2000-Db1_a_1_1.template");
+            paramJObj.put("Query", "hdfs://master:9000/query/FVC2000-Db1_b_101_1.template");
             
             Configuration conf = new Configuration();
             
